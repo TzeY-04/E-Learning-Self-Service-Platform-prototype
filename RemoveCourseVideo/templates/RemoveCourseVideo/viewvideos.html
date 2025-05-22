@@ -1,0 +1,64 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'viewcourse' course.course_id %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+{% block content %}
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc;">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Admin</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Course List</h2>
+</div>
+
+{% if error_message %}
+    <p style="color: red; font-weight: bold; text-align: center;">{{ error_message }}</p>
+{% endif %}
+
+<div class="video-card">
+    <div class="video-info">
+        <h2>{{ video.video_title }}</h2>
+        <p><strong>You can view video using below link.</strong></p>
+        <p><strong>Video's Link:</strong>  
+            <a href="{{ video.video_path }}" target="_blank">{{ video.video_path }}</a>
+        </p>
+    </div>
+</div>
+
+{% endblock %}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; 
+    }
+
+    .video-card {
+        text-align: center;
+    }
+
+    .video-card a {
+        color: #08c942;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .video-card a:hover {
+        text-decoration: underline;
+    }
+</style>

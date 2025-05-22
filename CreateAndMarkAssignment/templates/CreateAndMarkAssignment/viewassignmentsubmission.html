@@ -1,0 +1,70 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'teachermainpage' %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="username" value="{{ username }}">
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc;">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Teacher</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Mark Assignment</h2>
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+
+    <form method="post" action="{% url 'viewassignmentsubmission' %}">
+        {% csrf_token %}
+        <input type="hidden" name="assignment_id" value="{{ assignment_id }}">
+        <input type="hidden" name="username" value="{{ username }}">
+
+        <h1 style="font-size: 32px; margin-bottom: 20px;">Submissions for: {{ assignment.assignment_title }}</h1>
+        <table style="width: 80%; margin: auto; border-collapse: collapse; font-size: 16px;">
+            <thead>
+                <tr style="background-color: #f4f4f4;">
+                    <th style="border: 1px solid #ccc; padding: 12px; text-align: left;">Student</th>
+                    <th style="border: 1px solid #ccc; padding: 12px; text-align: center;">Status</th>
+                    <th style="border: 1px solid #ccc; padding: 12px; text-align: center;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for submission in submissions %}
+                <tr>
+                    <td style="border: 1px solid #ccc; padding: 10px; text-align: left;">{{ submission.student_name }}</td>
+                    <input type="hidden" name="student_name" value="{{ submission.student_name }}">
+                    <input type="hidden" name="submission_id" value="{{ submission.id }}">
+
+                    <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">
+                        {% if submission.assignment_file_path %}
+                            <span style="color: green;">Submitted</span>
+                        {% else %}
+                            <span style="color: red;">Not Submitted</span>
+                        {% endif %}
+                    </td>
+                    <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">
+                        <button type="submit" style="padding: 8px 16px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">Mark</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" style="border: 1px solid #ccc; padding: 10px; text-align: center;">No submissions available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+</style>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Manager Interface</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #f2f2f2;
+            text-align: center;
+            border-bottom: 2px solid #ccc;
+            padding: 20px 0;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+
+        .header h2 {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .course-details {
+            border: 2px solid black;
+            padding: 20px;
+            width: 50%;
+            background-color: #f8f8f8;
+            margin-bottom: 20px;
+        }
+
+        .course-details h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .course-details p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .feedback-section {
+            width: 50%;
+            margin-top: 20px;
+        }
+
+        .feedback-container {
+            border: 2px solid #ccc;
+            padding: 20px;
+            background-color: #f8f8f8;
+        }
+
+        .feedback-container h2 {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .feedback-entry {
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            background-color: #ffffff;
+        }
+
+        .compile-button {
+            margin-top: 20px;
+        }
+
+        .compile-button button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .compile-button button:hover {
+            background-color: #45a049;
+        }
+         /* Add styles for Logout and Back buttons */
+         .logout-button, .back-button {
+            text-align: right;
+            padding: 10px;
+            position: absolute;
+            top: 0;
+        }
+
+        .logout-button {
+            right: 0;
+        }
+
+        .back-button {
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logout-button">
+        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+        </form>
+    </div>
+    <div class="back-button">
+        <form method="post" action="{% url 'AnalyticsBoardPage' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+        </form>
+    </div>
+
+    <div class="header">
+        <h1>Product Manager</h1>
+        <h2>Course Feedback Overview</h2>
+    </div>
+
+    <div class="container">
+        <div class="course-details">
+            {% for feedback in feedbackAll %}
+            {% if forloop.first %}
+                <h2>{{ feedback.course_id.course_name }}</h2>
+                <p>📝 <b>{{ feedback.course_id.course_name }} Comments:</b> {{ NumFeedback }}</p>
+            {% endif %}
+        {% endfor %}
+        </div>
+
+        <div class="feedback-section">
+            <div class="feedback-container">
+                <h2>📢 Course Feedbacks</h2>
+                <div>
+                    {% for feedback in feedbackAll %}
+                        <div class="feedback-entry">
+                            <p>💬 <b>{{feedback.course_id.course_name}} Feedback:</b> {{ feedback.feedback }}</p>
+                        </div>
+                    {% empty %}
+                        <p style="text-align: center; color: gray;">No comments available.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="compile-button">
+            <form action="{% url 'UserFeedbackReport' %}" method="GET">
+                <button type="submit" style="padding: 10px 20px; font-size: 16px;">
+                    Compile into report
+                </button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+</style>

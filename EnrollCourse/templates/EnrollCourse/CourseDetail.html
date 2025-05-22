@@ -1,0 +1,170 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'ShowCourseDetail' %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc; ">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Student</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Enroll Course</h2>
+</div>
+
+{% block content %}
+
+<div class="container">
+    <div class="course-details">
+        <h2>{{ course.course_name }}</h2>
+        <p>Teacher's Name: <b>{{ course.teacher_name }}</b></p>
+        <p>Videos: <b>{{ num_videos }}</b></p>
+        <p>Number of Assignments: <b>{{ num_assignments }}</b></p>
+        <p>Sales: <b>{{ course.salesAmount }}</b></p>
+        <p class="price">Price: <b>RM{{ course.course_price }}</b></p>
+
+        <form method="post" action="{% url 'enroll_course' course.course_id %}" class="enroll-form">
+            {% csrf_token %}
+            <div class="enroll-form-info">
+                <label for="user_id">User ID: (*Please Make Sure You Enter Your Correct User ID)</label>
+                <input type="text" name="user_id" id="user_id" required>
+            </div>
+
+            <div class="enroll-form-info">
+                <label for="username">Username: (*Please Make Sure You Enter Your Correct Username)</label>
+                <input type="text" name="username" id="username" required>
+                <input type="hidden" name="user_id" value="{{ user_id }}">
+            </div>
+            <div class="button">
+                <button type="submit">Enroll</button>
+            </div>
+        </form>
+        <p class="reminder">*Please send the payment proof to the administrator via email</p>
+    </div>
+
+    <div class="feedback-section">
+        <h2>Feedback from Students</h2>
+        <div>
+            {% for feedback in coursefeedback %}
+                <p>💬 <b>Someone says:</b> {{ feedback.feedback }}</p>
+            {% empty %}
+                <p class="no-feedback">No feedback available.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+    }
+
+    .container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .course-details{
+        border: 2px solid black;
+        padding: 20px;
+        width: 50%;
+        background-color: #f8f8f8;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .course-details h2{
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .course-details p{
+        font-size: 18px;
+        margin: 5px 0;
+    }
+
+    .price{
+        font-size: 20px;
+        color: green;
+        font-weight: bold;
+    }
+
+    .enroll-form{
+        width: 100%;
+        margin-top: 20px;
+        text-align: left;
+    }
+
+    .enroll-form-info{
+        margin-bottom: 10px;
+    }
+
+    .enroll-form-info label{
+        font-size: 16px;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .enroll-form-info input{
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+
+    .button{
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .enroll-form button{
+        padding: 10px;
+        font-size: 16px;
+        width: 20%;
+        border-radius: 5px;
+    }
+
+    .enroll-form button:hover{
+        background-color: darkgray;
+    }
+
+    .feedback-section{
+        width: 50%;
+        text-align: center;
+    }
+
+    .feedback-section h2{
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .feedback-section p{
+        font-size: 16px;
+    }
+
+    .no-feedback{
+        color: gray;
+        text-align: center;
+    }
+
+    .reminder{
+        color: red;
+    }
+</style>

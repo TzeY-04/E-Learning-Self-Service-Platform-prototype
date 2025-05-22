@@ -1,0 +1,84 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'ShowPurchasedCourse' %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc; ">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Student</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Provide Feedback</h2>
+</div>
+
+<form method="post" action="{% url 'uploadfeedback' %}" class="feedback-form">
+    {% csrf_token %}
+    <div class="feedback-area">
+        {% for course in courses %}
+        <label for="feedback">Feedback to {{course.course_name}}: ({{course.teacher_name}})</label>
+        {% endfor %}
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <input type="hidden" name="course_id" value="{{ course_id }}">
+        <textarea name="feedback" id="feedback" required></textarea>
+    </div>
+    <div class="button">
+        <button type="submit" class="submit-btn">Submit</button>
+    </div>
+</form>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+
+    .feedback-form {
+        width: 50%;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 8px;
+        border: 2px solid black;
+        text-align: left;
+    }
+
+    .feedback-area {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-size: 16px;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid black;
+        border-radius: 5px;
+        resize: vertical;
+    }
+
+    .button {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .submit-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        width: 20%;
+    }
+</style>

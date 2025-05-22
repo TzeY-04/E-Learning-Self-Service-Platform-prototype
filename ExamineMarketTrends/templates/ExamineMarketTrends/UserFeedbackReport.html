@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Manager Interface</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #f2f2f2;
+            text-align: center;
+            border-bottom: 2px solid #ccc;
+            padding: 20px 0;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+
+        .header h2 {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+        .report-section {
+            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: #f8f8f8;
+            margin-bottom: 20px;
+        }
+
+        .report-section h2 {
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .report-section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .report-section table, .report-section th, .report-section td {
+            border: 1px solid #ccc;
+        }
+
+        .report-section th, .report-section td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .compile-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .compile-button button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .compile-button button:hover {
+            background-color: #45a049;
+        }
+
+        /* Add styles for Logout and Back buttons */
+        .logout-button, .back-button {
+            text-align: right;
+            padding: 10px;
+            position: absolute;
+            top: 0;
+        }
+
+        .logout-button {
+            right: 0;
+        }
+
+        .back-button {
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logout-button">
+        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+        </form>
+    </div>
+    <div class="back-button">
+        <form method="post" action="{% url 'AnalyticsBoardPage' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+        </form>
+    </div>
+
+    <div class="header">
+        <h1>Product Manager</h1>
+        <h2>Course Feedback Report</h2>
+    </div>
+
+    <div class="container">
+        <div class="report-section">
+            <h2>Course Details:</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Total Comments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for feedback in feedbackAll %}
+                    {% if forloop.first %}
+                    <tr>
+                        <td>{{ feedback.course_id.course_name }}</td>
+                        <td>{{ NumFeedback }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="report-section">
+            <h2>Course Feedbacks: </h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feedback</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for feedback in feedbackAll %}
+                    <tr>
+                        <td>{{ feedback.feedback }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td style="text-align: center; color: gray;">No comments available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+</style>

@@ -1,0 +1,89 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'submission' %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc; ">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Student</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Upload Assignment</h2>
+</div>
+{% for as in assignment %}
+<div class="assignment-title-block">
+        <p class="assignment-title">{{ as.assignment_title }}</p>
+</div>
+
+<form method="post" action="{% url 'uploadfile' %}" class="uploadfile-block-form">
+    {% csrf_token %}
+    <input type="hidden" name="assignment_id" value="{{ as.assignment_id }}">
+    <div class="uploadfile-block">
+        <label for="file_path">File Path: (Upload your file to a cloud and enter the file path here)</label>
+        <input type="text" name="file_path" id="file_path" required>
+    </div>
+    <input type="hidden" name="user_id" value="{{ user_id }}">
+    <button type="submit" class="submit-btn">Submit</button>
+</form>
+{% endfor %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .assignment-title-block {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .assignment-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin: 5px 0;
+    }
+
+    .uploadfile-block-form {
+        width: 50%;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        border: 2px solid black;
+    }
+
+    .uploadfile-block {
+        text-align: left;
+        margin-bottom: 15px;
+    }
+
+    .uploadfile-block label {
+        font-size: 16px;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .uploadfile-block input {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+</style>

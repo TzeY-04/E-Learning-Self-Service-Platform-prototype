@@ -1,0 +1,57 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'courselist' %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+{% block content %}
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc;">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Admin</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Delete Course</h2>
+</div>
+
+<div style="text-align: center;">
+    <h2>Are you sure you want to delete this course?</h2>
+    <p><strong>Course Name:</strong> {{ course.course_name }}</p>
+    <p><strong>Created by:</strong> {{ course.teacher_name }}</p>
+    <p><strong>Total Video:</strong> {{ num_videos }}</p>
+    <p><strong>Total Assignment:</strong> {{ num_assignment }}</p>
+    
+    <div class="feedback-section">
+        <p><strong>Course Feedback:</strong>
+        <div>
+            {% for feedback in studentFeedback %}
+                <p>💬 {{ feedback.feedback }}</p>
+            {% empty %}
+                <p class="no-feedback">No feedback available.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <form method="post" action="{% url 'confirm_delete_course' course.course_id %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user.user_id }}">
+        <button type="submit" style="padding: 10px 20px; background-color: red; color: white;">Delete Course</button>
+    </form>
+
+    <form method="get" action="{% url 'courselist' %}" style="display: inline;">
+        <button type="submit" style="padding: 10px 20px; background-color: grey; color: white;">Cancel</button>
+    </form>
+</div>
+{% endblock %}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+</style>

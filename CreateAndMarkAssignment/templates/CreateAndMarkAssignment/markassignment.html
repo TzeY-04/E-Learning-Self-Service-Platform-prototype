@@ -1,0 +1,62 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'teachermainpage' %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="username" value="{{ username }}">
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc;">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Teacher</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Mark Assignment</h2>
+</div>
+
+
+<div style="text-align: center; margin-top: 20px;">
+    <form method="post" action="{% url 'markassignment' %}">
+        {% csrf_token %}
+        <input type="hidden" name="assignment_id" value="{{ assignment.assignment_id }}">
+        <input type="hidden" name="username" value="{{ username }}">
+        <input type="hidden" name="submission_id" value="{{ submissions.id }}">
+        <input type="hidden" name="student_name" value="{{ submissions.student_name }}">
+
+        <h1 style="font-size: 32px; margin-bottom: 20px;">Submissions for: {{ assignment.assignment_title }}</h1>
+        
+        <div style="text-align: left; width: 80%; margin: auto; font-size: 18px; padding: 15px; background-color: #f9f9f9; border-radius: 8px;">
+            <h2>Student Name: {{ submissions.student_name }}</h2>
+            <h3>Assignment File:</h3>
+            <p>
+                {% if submissions.assignment_file_path %}
+                    <p>{{ submissions.assignment_file_path }}</p>
+                    <a href="{{ submissions.assignment_file_path }}" target="_blank" style="color: #4CAF50; text-decoration: none;">View Submitted File</a>
+                {% else %}
+                    <span style="color: red;">No submission available.</span>
+                {% endif %}
+            </p>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <input type="number" name="assignment_mark" placeholder="Enter Assignment Mark" style="font-size: 20px; padding: 10px; width: 300px; border: 1px solid #ccc; border-radius: 4px;" required>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <button type="submit" style="padding: 10px 20px; font-size: 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" >
+                Mark
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+</style>

@@ -1,0 +1,74 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'show_survey' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc; ">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Product Manager</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Survey Responses Page</h2>
+</div>
+
+<div class="survey-container">
+    {% for survey in surveys %}
+        <div class="survey-block">
+            <p class="question">{{ survey.survey_question }}</p>
+            <p class="answers">
+                <span class="no">No: {{ survey.survey_ans_no }}</span> |
+                <span class="yes">Yes: {{ survey.survey_ans_yes }}</span>
+            </p>
+        </div>
+    {% endfor %}
+</div>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .survey-container {
+        width: 80%;
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 10px;
+    }
+
+    .survey-block {
+        background: white;
+        padding: 15px;
+        margin: 10px 0;
+        border: 2px solid black;
+        border-radius: 8px;
+    }
+
+    .question {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-family: Arial, sans-serif;
+    }
+
+    .answers {
+        font-size: 14px;
+        color: #555;
+    }
+
+    .no {
+        color: red;
+        font-weight: bold;
+    }
+
+    .yes {
+        color: green;
+        font-weight: bold;
+    }
+</style>

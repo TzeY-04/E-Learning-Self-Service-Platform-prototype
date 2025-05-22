@@ -1,0 +1,76 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'teachermainpage' %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="username" value="{{ username }}">
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc; ">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Teacher</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Courses</h2>
+</div>
+
+{% for course in courses %}
+    <div style="max-width: 600px; margin: 20px auto; padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+        <h3 style="text-align: center; color: #333;">{{ course.course_name }}</h3>
+        <form method="post" action="{% url 'teacher_choice' %}">
+            {% csrf_token %}
+            <input type="hidden" name="username" value="{{ username }}">
+            <input type="hidden" name="course_id" value="{{ course.course_id }}">
+            <input type="hidden" name="course_name" value="{{ course.course_name }}">
+            
+            <div style="margin-bottom: 15px;">
+                <label for="teacherchoice" style="display: block; margin-bottom: 8px; font-size: 16px; color: #333;">Teacher:</label>
+                <select name="teacherchoice" id="teacherchoice" style="width: 100%; padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" required>
+                    <option value="Edit_course">Edit course</option>
+                    <option value="Create_assignment">Create assignment</option>
+                    <option value="Mark_assignment">Mark assignment</option>
+                    <option value="View_student_progress">View student progress</option>
+                </select>
+            </div>
+
+            <div>
+                <button type="submit" style="width: 100%; padding: 12px; background-color: #4CAF50; color: white; font-size: 16px; border: none; border-radius: 4px; cursor: pointer;">
+                    Enter
+                </button>
+            </div>
+        </form>
+    </div>
+{% endfor %}
+
+<form method="post" action="{% url 'createcourse' %}" style="max-width: 300px; margin: 30px auto; padding: 20px; ">
+    {% csrf_token %}
+    <div style="margin-bottom: 15px;">
+        <input type="hidden" name="username" value="{{ username }}">
+        <button type="submit" style="width: 100%; padding: 12px; background-color: #4CAF50; color: white; font-size: 16px; border: none; border-radius: 4px; cursor: pointer;">
+            Create Course
+        </button>
+    </div>
+</form>
+
+{% if success_message %}
+    <div style="text-align: center; margin-top: 20px;">
+        <p style="color: green; font-size: 18px;">{{ success_message }}</p>
+    </div>
+{% endif %}
+
+{% if error_message %}
+    <div style="text-align: center; margin-top: 20px;">
+        <p style="color: red; font-size: 18px;">{{ error_message }}</p>
+    </div>
+{% endif %}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+</style>

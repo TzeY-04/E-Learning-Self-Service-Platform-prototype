@@ -1,0 +1,98 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'submission' %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc; ">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Student</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Submit Assignment</h2>
+</div>
+
+<div>
+    {% if error_message %}
+    <p class="error-message">{{ error_message }}</p>
+    {% endif %}
+    
+    <div class="assignments-container">
+        {% for assignment in assignments %}
+            {% for course in courses %}
+            <div class="assignment-block">
+                <div class="assignment-info">
+                    <h2>{{ course.course_name }}</h2>
+                    <p><strong>Teacher's Name:</strong> {{ course.teacher_name }}</p>
+                    <p><strong>Assignment Title:</strong> {{ assignment.assignment_title }}</p>
+                    <p><strong>Assignment:</strong> {{ assignment.assignment_content }}</p>
+                </div>
+                <div>
+                    <form method="post" action="{% url 'submit_assignment' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value="{{ user_id }}">
+                        <input type="hidden" name="assignment_id" value="{{ assignment.assignment_id }}">
+                        <button type="submit" class="select-btn">Select</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .error-message {
+        color: red;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .assignments-container {
+        padding: 20px;
+    }
+
+    .assignment-block {
+        margin: 5px auto;
+        border: 2px solid black;
+        padding: 10px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        width: 80%;
+    }
+
+    .assignment-info {
+        flex: 1;
+    }
+
+    .assignment-info h2 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .assignment-info p {
+        margin: 8px 0;
+        font-size: 18px;
+    }
+
+    .select-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+</style>

@@ -1,0 +1,49 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'pmanagermainpage' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc; ">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Product Manager</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Survey Creation Page</h2>
+</div>
+
+<form method="post" action="{% url 'creating_survey' %}" style="max-width: 400px; margin: auto;">
+    {% csrf_token %}
+
+    <div style="margin-bottom: 10px;">
+        <label for="question_id" style="display: block; margin-bottom: 5px;">Question ID:</label>
+        <input type="text" name="question_id" id="question_id" style="width: 100%; padding: 8px; font-size: 14px;" required>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <label for="survey_question" style="display: block; margin-bottom: 5px;">Question:</label>
+        <input type="text" name="survey_question" id="survey_question" style="width: 100%; padding: 8px; font-size: 14px;" required>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <label for="survey_name" style="display: block; margin-bottom: 5px;">Survey Name:</label>
+        <input type="text" name="survey_name" id="survey_name" style="width: 100%; padding: 8px; font-size: 14px;" required>
+    </div>
+
+    
+    <div>
+        <button type="submit" style="width: 100%; padding: 10px">Submit</button>
+    </div>
+</form>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+</style>

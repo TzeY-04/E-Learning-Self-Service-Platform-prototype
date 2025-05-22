@@ -1,0 +1,54 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'manageuseraccount' %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user.user_id }}">
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+{% block content %}
+
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc;">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Admin</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Manage User Account</h2>
+</div>
+
+{% if error_message %}
+    <div style="color: red; text-align: center; margin-top: 10px;">
+        <p>{{ error_message }}</p>
+    </div>
+{% endif %}
+
+{% if success_message %}
+    <div style="color: green; text-align: center; margin-top: 10px;">
+        <p>{{ success_message }}</p>
+    </div>
+{% endif %}
+
+{% if user %}
+<div style="text-align: center; margin-top: 20px;">
+    <p><strong>User ID:</strong> {{ user.user_id }}</p>
+    <p><strong>Name:</strong> {{ user.user_name }}</p>
+    <p><strong>Role:</strong> {{ user.user_type }}</p>
+</div>
+{% else %}
+<div style="text-align: center; color: red; margin-top: 20px;">
+    <p>User does not exist.</p>
+</div>
+{% endif %}
+
+{% endblock %}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+</style>

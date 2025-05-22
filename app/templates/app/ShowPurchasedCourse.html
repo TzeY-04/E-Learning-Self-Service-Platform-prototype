@@ -1,0 +1,102 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'studentmainpage' %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc; ">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Student</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Purchased Course</h2>
+</div>
+
+<div class="submit-button">
+    <form method="post" action="{% url 'submission' %}">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <button type="submit" class="submit-btn">Submit Assignment</button>
+    </form>
+</div>
+
+<div class="courses-block">
+    {% for enrolledcourse in enrolledcourses %}
+        <div class="course-block-item">
+            <p class="course-name">{{ enrolledcourse.course_id.course_name }}</p>
+
+            <div class="enrolled-courses-button">
+                <form method="post" action="{% url 'track_learning_progress' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user_id }}">
+                    <input type="hidden" name="course_id" value="{{ enrolledcourse.course_id.course_id }}">
+                    <button type="submit" class="action-button">Track Progress</button>
+                </form>
+
+                <form method="post" action="{% url 'providefeedback' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user_id }}">
+                    <input type="hidden" name="course_id" value="{{ enrolledcourse.course_id.course_id }}">
+                    <button type="submit" class="action-button">Feedback</button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .submit-btn {
+        padding: 10px 15px;
+        font-size: 14px;
+        border-radius: 8px;
+    }
+
+    .courses-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .course-block-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 60%;
+        padding: 20px;
+        border: 2px solid black;
+        border-radius: 8px;
+        position: relative;
+    }
+
+    .course-name {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .enrolled-courses-button {
+        display: flex;
+        gap: 10px;
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+    }
+
+    .action-button {
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+</style>

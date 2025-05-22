@@ -1,0 +1,74 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'teachermainpage' %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="username" value="{{ username }}">
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc;">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Teacher</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Assignment</h2>
+</div>
+
+{% if error_message %}
+    <div style="color: red; margin-bottom: 20px; font-size: 16px; text-align: center;">
+        {{ error_message }}
+    </div>
+{% endif %}
+
+<form method="post" action="{% url 'createassignment' %}" style="max-width: 500px; margin: 30px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+    {% csrf_token %}
+    <input type="hidden" name="course_id" value="{{ course_id }}">
+    <input type="hidden" name="username" value="{{ username }}">
+
+    <div style="margin-bottom: 15px;">
+        <label for="assignment_title" style="display: block; margin-bottom: 8px; font-size: 16px; color: #333;">Assignment Title:</label>
+        <input type="text" name="assignment_title" style="width: 100%; padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" required>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="assignment_content" style="display: block; margin-bottom: 8px; font-size: 16px; color: #333;">Assignment Content:</label>
+        <textarea name="assignment_content" style="width: 100%; padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" required></textarea>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="assignment_fullmark" style="display: block; margin-bottom: 8px; font-size: 16px; color: #333;">Assignment Full Marks:</label>
+        <input type="number" name="assignment_fullmark" style="width: 100%; padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" required>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="assignment_id" style="display: block; margin-bottom: 8px; font-size: 16px; color: #333;">Assignment ID:</label>
+        <input type="text" name="assignment_id" style="width: 100%; padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" required>
+    </div>
+
+    <button type="submit" style="width: 100%; padding: 12px; font-size: 16px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        Create Assignment
+    </button>
+</form>
+
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+    
+
+
+
+
+
+
+   
+
+
+

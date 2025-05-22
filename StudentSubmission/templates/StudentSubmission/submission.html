@@ -1,0 +1,74 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'ShowPurchasedCourse' %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc; ">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Student</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Submit Assignment</h2>
+</div>
+
+<form method="post" action="{% url 'assignmentsubmission' %}" class="assignment-form">
+    {% csrf_token %}
+    
+    <div class="check-assignment">
+        <label for="user_id">User ID: (*Please Make Sure You Enter Your Correct User ID)</label>
+        <input type="text" name="user_id" id="user_id" required>
+    </div>
+
+    <div class="check-assignment">
+        <label for="course_id">Course ID: (*Please Make Sure You Enter Your Correct Username)</label>
+        <input type="text" name="course_id" id="course_id" required>
+    </div>
+    <input type="hidden" name="user_id" value="{{ user_id }}">
+    <button type="submit" class="submit-btn">Select</button>
+</form>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .assignment-form {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .check-assignment {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
+    .check-assignment label {
+        font-size: 16px;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .check-assignment input {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 5px;
+    }
+
+    .submit-btn {
+        padding: 10px;
+        font-size: 16px;
+        width: 30%;
+        border-radius: 5px;
+    }
+</style>

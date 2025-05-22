@@ -1,0 +1,93 @@
+<div style="text-align: right; padding: 10px; position: absolute; top: 0; right: 0;">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Logout</button>
+    </form>
+</div>
+
+<div style="text-align: left; padding: 10px; position: absolute; top: 0; left: 0;">
+    <form method="post" action="{% url 'teachermainpage' %}" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="username" value="{{ username }}">
+        <button type="submit" style="padding: 5px 10px; font-size: 14px;">Back</button>
+    </form>
+</div>
+
+<div style="background-color: #f2f2f2; text-align: center; border-bottom: 2px solid #ccc;">
+    <h1 style="font-size: 48px; font-family: 'Arial', sans-serif; margin: 0;">Teacher</h1>
+    <h2 style="font-size: 28px; font-family: 'Arial', sans-serif; margin: 0;">Student Progress</h2>
+</div>
+
+<div style="text-align: center; margin-top: 20px; border: 2px solid black; padding: 15px; width: 50%; margin-left: auto; margin-right: auto; font-family: Arial, sans-serif;">
+
+    <h2 style="border-bottom: 2px solid black; padding-bottom: 10px;">Progress for {{ selected_student }}</h2>
+
+    <div style="margin-bottom: 30px; text-align: left;">
+        <h3>Assignments:</h3>
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="border: 1px solid #ccc; padding: 8px;">Assignment</th>
+                    <th style="border: 1px solid #ccc; padding: 8px;">Mark</th>
+                    <th style="border: 1px solid #ccc; padding: 8px;">Max Mark</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for assignment in assignments %}
+                <tr>
+                    <td style="border: 1px solid #ccc; padding: 8px;">
+                        {{ assignment.assignment_id.assignment_title }}
+                    </td>
+                    <td style="border: 1px solid #ccc; padding: 8px;">
+                        {{ assignment.assignment_mark|default:"Not graded" }}
+                    </td>
+                    <td style="border: 1px solid #ccc; padding: 8px;">
+                        {{ assignment.assignment_id.assignment_fullmark }}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" style="border: 1px solid #ccc; padding: 8px; text-align: center;">
+                        No assignments found
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div style="border-top: 2px solid black; padding-top: 20px;">
+        <h3>Submit Feedback:</h3>
+        <form method="post" action="{% url 'showstudentprogress' %}">
+            {% csrf_token %}
+            <input type="hidden" name="student_name" value="{{ selected_student }}">
+            <input type="hidden" name="course_id" value="{{ course_id }}">
+            <input type="hidden" name="username" value="{{ username }}">
+
+            <textarea name="teacher_feedback" 
+                        style="width: 100%; height: 100px; margin-bottom: 10px; border: 1px solid #ccc; padding: 8px;"
+                        placeholder="Enter your feedback here" required></textarea>
+            
+            <button type="submit" value="feedback" style="padding: 8px 15px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+                Submit Feedback
+            </button>
+            
+        </form>
+    </div>
+</div>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+
+
+
+
+
+        
+
+
